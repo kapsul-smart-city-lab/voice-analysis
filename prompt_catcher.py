@@ -2,7 +2,7 @@ import speech_recognition as sr
 
 
 class Listener:
-    def __init__(self, callback: callable=print) -> None:
+    def __init__(self, callback: callable = print) -> None:
         self.callback = callback
 
     def listen(self) -> None:
@@ -10,13 +10,14 @@ class Listener:
         with sr.Microphone() as source:
             self.microfone = source
             while True:
-                text = self.audio_to_text("dinleniyor (tüm sesler)", phrase_time_limit=4)
+                text = self.audio_to_text(
+                    "dinleniyor (tüm sesler)", phrase_time_limit=4)
 
                 if "hey kapsül" in text.lower():
                     print("anahtar kelime tespit edildi: ", text)
 
                     text = self.audio_to_text("dinleniyor (prompt)",
-                                        timeout=5, phrase_time_limit=5)
+                                              timeout=5, phrase_time_limit=5)
 
                     self.callback(text)
 
@@ -30,18 +31,18 @@ class Listener:
         print("tanımlanıyor...")
         return self.recognizer.recognize_google(
             audio, language="tr-TR"
-        ) 
+        )
 
 
-def prompt_catcher():
-    listener = Listener()
+    def prompt_catcher(self, e):
 
-    while True:
-        try:
-            listener.listen()
-        except Exception as e:
-            print("Error:",type(e), e)
+        while True:
+            try:
+                self.listen()
+            except Exception as e:
+                print("Error:", type(e), e)
 
 
 if __name__ == "__main__":
-    prompt_catcher()
+    listener = Listener()
+    listener.prompt_catcher()
