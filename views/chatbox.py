@@ -184,14 +184,6 @@ class ChatBox(ft.UserControl):
         return self._columns
 
     @property
-    def default(self):
-        if not is_definied(self, '_columns'):
-            self._default = ft.ResponsiveRow([ft.Row([DefaultMessage(k, v, self.page) for k, v in default.items()],
-                                                     alignment=ft.MainAxisAlignment.CENTER)])
-
-            return self._default
-
-    @property
     def message_column(self):
         if not is_definied(self, '_message_column'):
             self._message_column = ft.Column(
